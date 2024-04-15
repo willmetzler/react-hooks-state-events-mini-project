@@ -1,20 +1,20 @@
-function CategoryFilter({categories, selected, setSelected}) {
+import React from "react";
+import TaskList from "./TaskList";
 
-  function handleClick(category) {
-    setSelected(category === "All" ? null : category); 
+
+function CategoryFilter({changeTasks}) {
+  function setClass(event) {
+    event.target.setAttribute("class", "selected");
   }
-   
-
   return (
     <div className="categories">
       <h5>Category filters</h5>
-      {categories.map(category => {
-        return (
-        <button key={category} onClick={()=> handleClick(category)} className={selected === category ? "selected" : ""}>
-          {category}
-        </button>
-      )
-      })}
+      {/* render <button> elements for each category here */}
+      <button key={"All"} onClick={event => {setClass(event); changeTasks("All")}}>All</button>
+      <button key={"Code"} onClick={event => {setClass(event); changeTasks("Code")}} >Code</button>
+      <button key={"Food"} onClick={event => {setClass(event); changeTasks("Food")}}>Food</button>
+      <button key={"Money"} onClick={event => {setClass(event); changeTasks("Money")}}>Money</button>
+      <button key={"Misc"} onClick={event => {setClass(event); changeTasks("Misc")}}>Misc</button>
     </div>
   );
 }

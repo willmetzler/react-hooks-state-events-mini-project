@@ -1,46 +1,26 @@
-import React, {useState} from "react";
+import React from "react";
+import { useState } from "react";
 
-
-function NewTaskForm({categories, tasks, setTasks, onTaskFormSubmit}) {
-
-  const [newTaskData, setNewTaskData] = useState({
-    task: '',
-    category:''
-  })
-
-  const mappedCategories = categories
-  .filter(category => category !== "All")
-  .map(category => (
-    <option key={category}>{category}</option>
-  ));
-
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    onTaskFormSubmit(newTaskData)
-    /*return (
-      setTasks([...tasks, newTaskData])
-    )*/
-  }
-
+function NewTaskForm({onTaskFormSubmit}) {
+  const [category, setCategory] = useState("Code");
+  const [text, setFood] = useState("");
+  console.log(category);
   return (
-    <form onSubmit={handleSubmit} className="new-task-form">
+    <form className="new-task-form" onSubmit={event => {
+        event.preventDefault();
+        onTaskFormSubmit({"category": category, "text": text});
+      }}>
       <label>
         Details
-        <input
-        type="text" 
-        name="task"
-        value={newTaskData.text}
-        onChange={(event) => {
-          setNewTaskData( {...newTaskData, text: event.target.value} )}} />
+        <input type="text" name="text" onChange={event => setFood(event.target.value)}/>
       </label>
       <label>
         Category
-        <select name="category"
-        value={newTaskData.category}
-        onChange={(event) => setNewTaskData( {...newTaskData, category: event.target.value} )}
-        >
-          {mappedCategories}
+        <select name="category" onChange={event => setCategory(event.target.value)}>
+          <option>Code</option>
+          <option>Food</option>
+          <option>Money</option>
+          <option>Misc</option>
         </select>
       </label>
       <input type="submit" value="Add task" />
